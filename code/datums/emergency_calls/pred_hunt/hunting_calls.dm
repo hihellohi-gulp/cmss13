@@ -191,20 +191,20 @@
 /datum/emergency_call/young_bloods/remove_nonqualifiers(list/datum/mind/candidates_list)
 	var/list/datum/mind/youngblood_candidates_clean = list()
 	for(var/datum/mind/youngblood_candidate in candidates_list)
-		if(youngblood_candidate.current?.client?.check_whitelist_status(WHITELIST_YAUTJA) || jobban_isbanned(youngblood_candidate.current, ERT_JOB_YOUNGBLOOD))
-			to_chat(youngblood_candidate.current, SPAN_WARNING("You didn't qualify for the ERT beacon because you are already whitelisted for predator or you are job banned from youngblood."))
-			continue
+		//if(youngblood_candidate.current?.client?.check_whitelist_status(WHITELIST_YAUTJA) || jobban_isbanned(youngblood_candidate.current, ERT_JOB_YOUNGBLOOD))
+			//to_chat(youngblood_candidate.current, SPAN_WARNING("You didn't qualify for the ERT beacon because you are already whitelisted for predator or you are job banned from youngblood."))
+			//continue
 		if(check_timelock(youngblood_candidate.current?.client, JOB_YOUNGBLOOD_ROLES_LIST, youngblood_time))
 			to_chat(youngblood_candidate.current, SPAN_WARNING("You did not qualify for the ERT beacon because you have already reached the maximum time allowed for Youngblood, please consider applying for Predator on the forums."))
 			continue
 		if(!check_timelock(youngblood_candidate.current?.client, JOB_YOUNGBLOOD_ROLES_LIST, youngblood_time_required_for_job))
-			to_chat(youngblood_candidate.current, SPAN_WARNING("You did not qualify for the ERT beacon because you do not have enough experience as a youngblood. You need [round((youngblood_time_required_for_job / 18000) / 2)] hours as youngblood for the [name] beacon."))
+			to_chat(youngblood_candidate.current, SPAN_WARNING("You did not qualify for the ERT beacon because you do not have enough experience as a youngblood. You need [round(youngblood_time_required_for_job DECISECONDS_TO_HOURS)] hours as youngblood for the [name] beacon."))
 			continue
 		if(check_timelock(youngblood_candidate.current?.client, JOB_SQUAD_ROLES_LIST, time_required_for_job) && (youngblood_candidate.current?.client.get_total_xeno_playtime() >= time_required_for_job))
 			youngblood_candidates_clean.Add(youngblood_candidate)
 			continue
 		if(youngblood_candidate.current)
-			to_chat(youngblood_candidate.current, SPAN_WARNING("You didn't qualify for the ERT beacon because you did not meet the required hours for this role [round((time_required_for_job / 18000) / 2)] hours on both squad roles and xenomorph roles."))
+			to_chat(youngblood_candidate.current, SPAN_WARNING("You didn't qualify for the ERT beacon because you did not meet the required hours for this role [round(time_required_for_job DECISECONDS_TO_HOURS)] hours on both squad roles and xenomorph roles."))
 	return youngblood_candidates_clean
 
 
